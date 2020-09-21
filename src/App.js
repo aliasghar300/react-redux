@@ -1,26 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { connect } from "react-redux";
+import user from "./actions/user";
+import TestClass from './testClass';
+import Test from "./test";
 
-function App() {
+
+function App(props) {
+
+  let description = "lorem epsum.."
+
+  React.useEffect(() => {
+    props.dispatch(user({description}))
+  },[])
+  
+  
+  console.log(props.user, "user")
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        {props.user.name} {props.user.description}
+        <TestClass />
+        <Test />
+   </div>
   );
 }
 
-export default App;
+function mapStateToProps({user}){
+  return {
+    user
+  }  
+}
+
+export default connect(mapStateToProps)(App) ;
